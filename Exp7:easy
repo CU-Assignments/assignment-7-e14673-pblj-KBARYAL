@@ -1,0 +1,28 @@
+import java.sql.*; 
+
+public class Main {
+    public static void main(String[] args) {
+
+        String url = "jdbc:mysql://localhost:3306/your_database"; // Change your_database
+        String user = "your_username"; // Change your_username
+        String password = "your_password"; // Change your_password
+
+
+        String query = "SELECT EmpID, Name, Salary FROM Employee";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            System.out.println("EmpID | Name | Salary");
+            while (rs.next()) {
+                int id = rs.getInt("EmpID");
+                String name = rs.getString("Name");
+                double salary = rs.getDouble("Salary");
+                System.out.println(id + " | " + name + " | " + salary);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
